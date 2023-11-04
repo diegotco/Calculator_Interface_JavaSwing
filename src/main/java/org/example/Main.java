@@ -1,19 +1,53 @@
 package org.example;
 
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 class Calc implements Calculations {
 
-    Scanner input = new Scanner(System.in);
     int x;
     int y;
 
     public Calc() {
-        System.out.println("Enter the first INTEGER: ");
-        x = input.nextInt();
+        JFrame frame = new JFrame("Integer Input Screen");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 150);
 
-        System.out.println("Enter the second INTEGER: ");
-        y = input.nextInt();
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        frame.add(panel);
+
+        JLabel firstInteger = new JLabel("Enter the first INTEGER:");
+        JTextField integerField = new JTextField(20);
+
+        JLabel secondInteger = new JLabel("Enter the second INTEGER:");
+        JTextField integerField2 = new JTextField(20);
+
+        JButton submitButton = new JButton("Submit");
+
+        panel.add(firstInteger);
+        panel.add(integerField);
+        panel.add(secondInteger);
+        panel.add(integerField2);
+        panel.add(submitButton);
+
+        submitButton.addActionListener(e -> {
+            try {
+                String enteredInteger1 = integerField.getText();
+                String enteredInteger2 = integerField2.getText();
+                x = Integer.parseInt(enteredInteger1);
+                y = Integer.parseInt(enteredInteger2);
+                // Perform calculations and display results here
+                add();
+                subtract();
+                multiply();
+                division();
+                JOptionPane.showMessageDialog(null, "Integers entered: " + enteredInteger1 + " and " + enteredInteger2);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter valid integers.");
+            }
+        });
+
+        frame.setVisible(true);
     }
 
     @Override
@@ -42,11 +76,7 @@ class Calc implements Calculations {
 public class Main {
     public static void main(String[] args) {
 
-        var addResult = new Calc();
+        new Calc();
 
-        addResult.add();
-        addResult.subtract();
-        addResult.multiply();
-        addResult.division();
     }
 }
